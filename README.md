@@ -9,7 +9,7 @@ This is a browser-based mental math game. A user will be given a series of simpl
 ## Installation Instructions
 
 * Clone this repo.
-* In terminal, navigate to your project folder run the following:
+* In terminal, navigate to your project folder and run the following:
 ```
 $ npm install
 $ npm run start

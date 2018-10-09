@@ -7,6 +7,26 @@ import { User } from './backEnd.js';
 
 
 $(document).ready(function() {
+  //API CALL
+  //   $('.buttontest').click(function() {
+  //     let request = new XMLHttpRequest();
+  //     const url = `https://ghibliapi.herokuapp.com/`;
+  //     request.onreadystatechange = function() {
+  //     if (this.readyState === 4 && this.status === 200) {
+  //       const response = JSON.parse(this.responseText);
+  //       getElements(response);
+  //     }
+  //   }
+  //   request.open("GET", url, true);
+  //   request.send();
+  //   const getElements = function(response) {
+  //     console.log(response);
+  //     $('.buttontest').text(response)
+  //   }
+  // });
+
+
+  //APP START
   $("#round-start").attr("disabled", "disabled");
   let user;
   $("#get-user-name").submit(function(event) {
@@ -39,8 +59,6 @@ $(document).ready(function() {
           user.updateScore();
           $(".round-score").text(user.roundScore);
           $(".game-score").text(user.gameScore);
-          console.log("Game Score: " + user.gameScore);
-          console.log("Round Score: " + user.roundScore);
           $(".evaluationResponse").show();
           $(".evaluationResponse").text("Correct!");
           $(".evaluationResponse").fadeOut("");
@@ -67,6 +85,7 @@ $(document).ready(function() {
     }
     outerFunct();
   });
+
 })
 
 function stopTimer(problemListener) {
@@ -94,14 +113,19 @@ function displaySuccess(user){
   setTimeout(function(){
     $(".evaluationResponse").show();
     $(".evaluationResponse").text("Great job on round " + user.currentRound + "! Get ready for round " + (user.currentRound + 1) + ", where you will only have " + (user.getTime(user.currentRound + 1)/1000).toFixed(1) + " seconds for each question.");
+    $.get(`http://numbersapi.com/${user.problemSet[14].solution}/trivia?notfound=floor&fragment`, function(data) {
+      $('.trivia').text(`Your last answer was ${user.problemSet[14].solution}. Did you know that ${user.problemSet[14].solution} is ${data}?`);
+    });
     $(".game-summary").slideDown();
-    $(".game-summary").append(`<div class='problem-set-${user.currentRound}'</div>`);
-    $(`.problem-set-${user.currentRound}`).append(`<a href="#" id="problem-set-${user.currentRound}-dropdown">Show the results of Round ${user.currentRound}</a><ol id="problem-set-${user.currentRound}-list"</ol>`);
-    user.problemSet.forEach(function(problem) {
-      $(`#problem-set-${user.currentRound}-list`).append(`<li>${problem.string} ${problem.solution}</li>`);
-    })
-    $(`#problem-set-${user.currentRound}-dropdown`).click(function() {
-      $(`#problem-set-${user.currentRound}-list`).slideToggle();
+    $("#round-list").append(`<li class='problem-set-${user.currentRound}'><a href='#' class='problem-set-link' data-value='${user.currentRound}'>Click here to see your results for round ${user.currentRound}</a></li>`);
+    $("a.problem-set-link").last().click(function() {
+      $(".problems-list").hide();
+      const index = $(this).data("value") - 1;
+      $(".problems-list").text(`Round ${index + 1}`);
+      user.gameSets[index].forEach(function(prob) {
+        $(".problems-list").append(`<li>${prob.string} ${prob.solution}</li>`);
+      })
+      $(".problems-list").fadeIn();
     });
   }, 500);
   $(".clock").text(`${(user.getTime(user.currentRound + 1)/1000).toFixed(1)}`);
@@ -112,4 +136,17 @@ function gameOver(user, timer) {
   $(".evaluationResponse").show();
   $(".evaluationResponse").text("GAME OVER. Here's how you did:");
   $(".game-summary").slideDown();
+  $("#round-list").append(`<li class='problem-set-${user.currentRound}'><a href='#' class='problem-set-link' data-value='${user.currentRound}'>Click here to see your results for round ${user.currentRound}</a></li>`);
+  $("a.problem-set-link").last().click(function() {
+    $(".problems-list").hide();
+    const stop = user.currentProb;
+    console.log(stop);
+    const index = $(this).data("value") - 1;
+    $(".problems-list").text(`Round ${index + 1}`);
+    for (let i = 0; i < stop - 1; i++) {
+      $(".problems-list").append(`<li>${user.problemSet[i].string} ${user.problemSet[i].solution}</li>`);
+    }
+    $(".problems-list").append(`<li><span class='loser'>${user.problemSet[user.currentProb].string} ${user.problemSet[user.currentProb].solution}</span>`)
+    $(".problems-list").fadeIn();
+  });
 }

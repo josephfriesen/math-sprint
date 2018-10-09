@@ -18,6 +18,7 @@ export class User {
     this.operatorIndex = 0;
     this.superSet = this.makeSupersets();
     this.problemSet = [];
+    this.gameSets = [];
     this.timelimit = 0;
     this.responseSet = [];
     this.currentProb = 0;
@@ -73,6 +74,7 @@ export class User {
     this.roundScore = 0;
     this.currentProb = 0;
     this.problemSet = this.buildProblemSet();
+    this.gameSets.push(this.problemSet);
     this.timeLimit = this.getTime(this.currentRound);
     this.timeRemaining = this.timeLimit;
   }
