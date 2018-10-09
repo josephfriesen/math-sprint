@@ -1,4 +1,68 @@
-.ham {
-  color: rgb(2, 10, 100);
+ol {
+  display: none;
+}
 
+.game-summary {
+  margin-top: 30px;
+}
+
+.problem-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  height: 80px;
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.game-start-row {
+  padding: 0 5px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+
+.clock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 70px;
+  border: 2px solid hotpink;
+  border-radius: 50%;
+}
+
+.blinking {
+  animation: blinking 500ms 6;
+}
+
+.swelling {
+  animation: swelling 1000ms 1;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+@keyframes swelling {
+  50% {
+    box-shadow: 0 0 10px 5px lighten(grey, 5);
+  }
+}
+
+
+@keyframes blinking {
+  50%{
+    background-color: red;
+    color: white;
+  }
 }

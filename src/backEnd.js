@@ -21,7 +21,10 @@ export class User {
     this.timelimit = 0;
     this.responseSet = [];
     this.currentProb = 0;
+    this.timeRemaining = 0;
   }
+
+
 
   buildProblemSet() {
     const out = [];
@@ -33,8 +36,15 @@ export class User {
     return out;
   }
 
-  getTime() {
-    return Math.floor((10000)/(this.currentRound));
+  getTime(n) {
+    return Math.floor((10000)/(n));
+  }
+
+  tickTime(){
+    let timeLeft = this.timeLimit;
+    setInterval(function(){
+      timeLeft -= 1000;
+    }, 10000)
   }
 
   evaluateAnswer(currentProb) {
@@ -43,15 +53,15 @@ export class User {
         this.currentProb += 1;
         // console.log(this.responseSet[currentProb]);
         // console.log(this.problemSet[currentProb].solution);
-        return 1;
+        return "correct";
       }
       else {
         // console.log(this.responseSet);
         console.log(this.problemSet[currentProb].solution);
-        return false;
+        return "incorrect";
       }
     } else if(this.problemSet[this.currentProb] == undefined){
-      return 2;
+      return "end of round";
     } else {
       console.log("error!");
     }
@@ -63,7 +73,13 @@ export class User {
     this.roundScore = 0;
     this.currentProb = 0;
     this.problemSet = this.buildProblemSet();
-    this.timeLimit = this.getTime();
+    this.timeLimit = this.getTime(this.currentRound);
+    this.timeRemaining = this.timeLimit;
+  }
+
+  updateScore() {
+    this.roundScore = this.roundScore + 1;
+    this.gameScore = this.gameScore + 1;
   }
 
   makeSupersets() {
