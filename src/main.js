@@ -36,6 +36,7 @@ $(document).ready(function() {
     user = new User(name);
     $(".welcome").slideUp();
     $("#round-start").removeAttr("disabled");
+    $(".main-game").fadeIn();
   })
 
   $("#round-start").click(function() {
@@ -112,7 +113,7 @@ function displaySuccess(user){
   $("#round-start").removeAttr("disabled");
   setTimeout(function(){
     $(".evaluationResponse").show();
-    $(".evaluationResponse").text("Great job on round " + user.currentRound + "! Get ready for round " + (user.currentRound + 1) + ", where you will only have " + (user.getTime(user.currentRound + 1)/1000).toFixed(1) + " seconds for each question.");
+    $(".evaluationResponse").text("Great job on round " + user.currentRound + ", " + user.name + "! Get ready for round " + (user.currentRound + 1) + ", where you will only have " + (user.getTime(user.currentRound + 1)/1000).toFixed(1) + " seconds for each question.");
     $.get(`http://numbersapi.com/${user.problemSet[14].solution}/trivia?notfound=floor&fragment`, function(data) {
       $('.trivia').text(`Your last answer was ${user.problemSet[14].solution}. Did you know that ${user.problemSet[14].solution} is ${data}?`);
     });
