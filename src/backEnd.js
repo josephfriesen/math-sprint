@@ -5,6 +5,7 @@ export class Problem {
     this.operator = operator;
     this.string = `${operand1} ${operator} ${operand2} = `;
     this.solution = eval(`${operand1} ${operator} ${operand2}`);
+    this.value = 0;
   }
 }
 
@@ -80,8 +81,9 @@ export class User {
   }
 
   updateScore() {
-    this.roundScore = this.roundScore + 1;
-    this.gameScore = this.gameScore + 1;
+    console.log(this.currentProb);
+    this.roundScore = this.roundScore + this.problemSet[this.currentProb-1].value;
+    this.gameScore = this.gameScore + this.problemSet[this.currentProb-1].value;
   }
 
   makeSupersets() {
@@ -92,17 +94,21 @@ export class User {
     for(let i=0; i < 20; i++){
       for(let j=0; j < 20; j++){
         let prob = new Problem(i, j, "+");
+        prob.value = 1;
         superSetAdd.push(prob);
         if (i >= j) {
           prob = new Problem(i, j, "-");
+          prob.value = 2;
           superSetSub.push(prob);
         }
         if (i <= 10 && j <= 10) {
           prob = new Problem(i, j, "*");
+          prob.value = 3;
           superSetMult.push(prob);
         }
         if (j != 0 && i % j == 0) {
           prob = new Problem(i, j, "/");
+          prob.value = 4;
           superSetDiv.push(prob);
         }
       }

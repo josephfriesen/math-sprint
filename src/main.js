@@ -55,6 +55,7 @@ $(document).ready(function() {
         user.responseSet[user.currentProb] = currentResponse;
         response = user.evaluateAnswer(user.currentProb);
         if (response == "correct") {
+          $(".clock").removeClass("blinking");
           user.timeRemaining = user.timeLimit;
           user.updateScore();
           $(".round-score").text(user.roundScore);
@@ -70,7 +71,6 @@ $(document).ready(function() {
           $(".clock").addClass("blinking");
         }
         if (user.timeRemaining <= 0) {
-          $(".clock").removeClass("blinking");
           $(".clock").addClass("swelling");
           stopTimer(problemListener);
           gameOver(user, problemListener);
