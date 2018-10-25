@@ -29,4 +29,4 @@ $ npm run start
 
 ## Legal
 
-Created by [Joseph Friesen](mailto:friesen.josephc@gmail.com) and (Ben Kiggen)[mailto:benkiggen@gmail.com], 2018.
+Created by [Joseph Friesen](mailto:friesen.josephc@gmail.com) and [Ben Kiggen](mailto:benkiggen@gmail.com), 2018.
