@@ -6,6 +6,10 @@
 
 This is a browser-based mental math game. A user will be given a series of simple arithmetic problems, starting with addition through subtraction, multiplication and division, and will be given a progressively more stringent time limit for solving the problem. When the user fails to answer a question within the given time limit, the game will end and the user will be given their total score.
 
+## Screenshots
+
+![Screenshot](./src/img/screenshot.png)
+
 ## Installation Instructions
 
 * Clone this repo.
@@ -17,7 +21,7 @@ $ npm run start
 
 ## Technologies Used
 
-* HTMl
+* HTML
 * CSS
 * SASS Preprocessor
 * Bootstrap
